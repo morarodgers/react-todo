@@ -3,18 +3,16 @@ import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 import Search from "./Search";
 
-function App() {
-  return (
-    <div>
-      <h1>Todo List</h1>
+const App = () => (
+  <div>
+    <h1>Todo List</h1>
 
-      <Search />
-      <hr />
+    <Search />
+    <hr />
 
-      <AddTodoForm />
-      <TodoList />
-    </div>
-  );
-}
+    <AddTodoForm />
+    <TodoList />
+  </div>
+);
 
 export default App;
