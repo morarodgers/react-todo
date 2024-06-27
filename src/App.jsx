@@ -12,11 +12,15 @@ const App = () => {
     setTodoList([...todoList, newTodoItem]);
   };
 
+  const handleSearch = (event) => {
+    console.log(event.target.value);
+  };
+
   return (
     <div>
       <h1>Todo List</h1>
 
-      <Search />
+      <Search onSearch={handleSearch} />
       <hr />
 
       <AddTodoForm addTodo={addTodo} onAddTodo={setNewTodo} />
