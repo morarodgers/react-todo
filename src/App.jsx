@@ -1,18 +1,31 @@
-// import * as React from "react";
+import { useState } from "react";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 import Search from "./Search";
+import actualTodoList from "./actualTodoList";
 
-const App = () => (
-  <div>
-    <h1>Todo List</h1>
+const App = () => {
+  const [todoList, setTodoList] = useState(actualTodoList);
+  const [newTodo, setNewTodo] = useState("");
 
-    <Search />
-    <hr />
+  const addTodo = (newTodoItem) => {
+    setTodoList([...todoList, newTodoItem]);
+  };
 
-    <AddTodoForm />
-    <TodoList />
-  </div>
-);
+  return (
+    <div>
+      <h1>Todo List</h1>
+
+      <Search />
+      <hr />
+
+      <AddTodoForm addTodo={addTodo} onAddTodo={setNewTodo} />
+      <p>
+        Searching for <strong>{newTodo}</strong>.
+      </p>
+      <TodoList list={todoList} />
+    </div>
+  );
+};
 
 export default App;
