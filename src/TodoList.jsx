@@ -20,11 +20,10 @@ import TodoListItem from "./TodoListItem";
   },
 ]; */
 
-const TodoList = ({ list }) => (
+const TodoList = ({ todoList }) => (
   <div>
     <ul>
-      {list.map((todo) => (
-        // return <TodoListItem key={TodoListItem.id} todo={TodoListItem} />;
+      {todoList.map((todo) => (
         <TodoListItem key={todo.id} todo={todo} />
       ))}
     </ul>
@@ -32,7 +31,7 @@ const TodoList = ({ list }) => (
 );
 
 TodoList.propTypes = {
-  list: PropTypes.arrayOf(
+  todoList: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,

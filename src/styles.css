@@ -1,0 +1,94 @@
+/* My Colors */
+:root {
+  --salmon-pink: #fa8072;
+  --soft-peach: #ffdab9;
+  --white: #ffffff;
+  --dark-grey: #333333;
+}
+
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--soft-peach);
+  color: var(--dark-grey);
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: var(--salmon-pink);
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Container */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Search */
+.search {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search input {
+  padding: 10px;
+  border: 2px solid var(--salmon-pink);
+  border-radius: 4px;
+  width: 80%;
+  max-width: 300px;
+}
+
+/* Add Todo Form */
+form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+form input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 2px solid var(--salmon-pink);
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+form button {
+  padding: 10px 20px;
+  border: none;
+  background-color: var(--salmon-pink);
+  color: var(--white);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: darken(var(--salmon-pink), 10%);
+}
+
+/* Todo List */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: var(--salmon-pink);
+  color: var(--white);
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+li:last-child {
+  margin-bottom: 0;
+}
