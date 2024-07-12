@@ -2,13 +2,12 @@ import { useState } from "react";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 import Search from "./Search";
-//import actualTodoList from "./actualTodoList";
-import "./styles.css"; // Import the stylesheet
+import Header from "./Header";
+import Footer from "./Footer";
+import "./styles1.css";
 
 const App = () => {
   const [todoList, setTodoList] = useState([]);
-  //const [todoList, setTodoList] = useState(actualTodoList);
-  //const [newTodo, setNewTodo] = useState("");
   const [search, setSearch] = useState("React");
 
   const addTodo = (newTodo) => {
@@ -20,20 +19,18 @@ const App = () => {
     console.log(event.target.value);
   };
 
-  const filteredTodoList = todoList.filter((todo) =>
-    todo.title.toLowerCase().includes(search.toLowerCase())
-  );
-
   return (
     <div>
+      <Header />
       <h1>Todo List</h1>
 
       <Search onSearch={handleSearch} search={search} />
       <hr />
 
       <AddTodoForm onAddTodo={addTodo} />
-      <TodoList todoList={filteredTodoList} />
-      {/*<TodoList list={todoList} />*/}
+      <TodoList todoList={todoList} />
+
+      <Footer />
     </div>
   );
 };
