@@ -1,18 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 import Search from "./Search";
 import Header from "./Header";
 import Footer from "./Footer";
-import "./styles1.css";
+import "./styles.css";
 
 const App = () => {
-  const [todoList, setTodoList] = useState([]);
-  const [search, setSearch] = useState("React");
+  const [todoList, setTodoList] = useState(() => {
+    const saveTodoList = localStorage.getItem("todoList");
+    return saveTodoList ? JSON.parse(saveTodoList) : [];
+  });
 
+  const [search, setSearch] = useState("React");
+  //localStorage.getItem("search") || "React";
   const addTodo = (newTodo) => {
     setTodoList([...todoList, newTodo]);
   };
+
+  useEffect(() => {
+    localStorage.setItem("search", search);
+  }, [search]);
+
+  useEffect(() => {
+    localStorage.setItem("todoList", JSON.stringify(todoList));
+  }, [todoList]);
 
   const handleSearch = (event) => {
     setSearch(event.target.value);

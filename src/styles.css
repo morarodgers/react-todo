@@ -16,10 +16,13 @@ body {
   flex-direction: column;
   color: #5d4d3c;
   height: 100%;
+  margin: 0;
+  width: 100%;
 }
 
 html {
   scroll-padding-top: 8rem;
+  width: 100%;
 }
 
 h1,
@@ -38,6 +41,18 @@ a {
 
 li {
   padding: 5px;
+}
+
+header {
+  height: 7rem;
+  position: sticky;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  animation: changeBackgroundColor 10s infinite;
 }
 
 footer {
@@ -127,18 +142,6 @@ a:hover {
   100% {
     background-color: #dbc1ad;
   }
-}
-
-header {
-  height: 7rem;
-  z-index: 1000;
-  position: sticky;
-  top: 0%;
-  display: flex;
-  width: 100%;
-  padding: 10px;
-  animation: changeBackgroundColor 10s infinite;
-  width: 100%;
 }
 
 html {

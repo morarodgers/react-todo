@@ -2,7 +2,6 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 const AddTodoForm = ({ onAddTodo }) => {
-  //const [todoTitle, setTitle] = useState("");
   const [todoTitle, setTodoTitle] = useState("");
 
   const handleTitleChange = (event) => {
@@ -11,9 +10,6 @@ const AddTodoForm = ({ onAddTodo }) => {
   };
   const handleAddTodo = (event) => {
     event.preventDefault();
-    //const newTitle = event.target.value;
-    //setTitle(newTitle);
-    //setTodoTitle(newTitle);
     if (todoTitle.trim()) {
       const newTodo = {
         id: Date.now(),
@@ -22,24 +18,7 @@ const AddTodoForm = ({ onAddTodo }) => {
       onAddTodo(newTodo);
       setTodoTitle("");
     }
-    //console.log(newTitle);
   };
-
-  /*  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (todoTitle.trim()) {
-      addTodo({
-        id: Date.now(),
-        title: todoTitle,
-        url: "#",
-      });
-      // Reset the form
-      setTodoTitle("");
-
-      // Reset newTodo state in App component
-      onAddTodo("");
-    }
-  }; */
 
   return (
     <div>
@@ -51,7 +30,6 @@ const AddTodoForm = ({ onAddTodo }) => {
           id="todoTitle"
           name="title"
           value={todoTitle}
-          //onChange={handleAddTodo}
           onChange={handleTitleChange}
           placeholder="Add new item"
         />
