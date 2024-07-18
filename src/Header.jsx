@@ -1,4 +1,4 @@
-import "./styles1.css";
+import "./styles.css";
 const Header = () => (
   <header>
     <img src="/portfolio.jpg" alt="Portfolio" />

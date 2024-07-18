@@ -34,9 +34,8 @@ const AddTodoForm = ({ onAddTodo }) => {
           placeholder="Add new item"
         />
         <button type="submit">Add</button>
-        <br />
         <p>
-          Adding <strong>{todoTitle}</strong>.
+          Adding: <strong>{todoTitle}</strong>
         </p>
       </form>
     </div>
