@@ -16,10 +16,13 @@ body {
   flex-direction: column;
   color: #5d4d3c;
   height: 100%;
+  margin: 0;
+  width: 100%;
 }
 
 html {
   scroll-padding-top: 8rem;
+  width: 100%;
 }
 
 h1,
@@ -30,7 +33,6 @@ h3 {
   margin-top: 30px;
 }
 
-button,
 span,
 a {
   margin-right: 10px;
@@ -38,6 +40,18 @@ a {
 
 li {
   padding: 5px;
+}
+
+header {
+  height: 7rem;
+  position: sticky;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  animation: changeBackgroundColor 10s infinite;
 }
 
 footer {
@@ -70,9 +84,10 @@ input {
 }
 
 button {
+  width: auto;
   background-color: rgb(205, 116, 6);
   border: none;
-  color: aliceblue;
+  color: rgb(231, 190, 57);
   padding: 10px 20px;
   text-align: center;
   font-size: 16px;
@@ -129,30 +144,16 @@ a:hover {
   }
 }
 
-header {
-  height: 7rem;
-  z-index: 1000;
-  position: sticky;
-  top: 0%;
-  display: flex;
-  width: 100%;
-  padding: 10px;
-  animation: changeBackgroundColor 10s infinite;
-  width: 100%;
-}
-
 html {
   scroll-padding-top: 8rem;
 }
 
 form {
   display: flex;
+  flex-direction: column;
   padding: 10px;
   gap: 10px;
-}
-
-form {
-  flex: 1;
+  /*flex: 1;*/
   max-width: 600px;
   border-radius: 10px;
   background-color: #f2ebe0;
