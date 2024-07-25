@@ -1,4 +1,3 @@
-//import { useState } from "react";
 import PropTypes from "prop-types";
 const Search = ({ search, onSearch }) => {
   const handleChange = (event) => {
@@ -8,18 +7,53 @@ const Search = ({ search, onSearch }) => {
 
   return (
     <>
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" value={search} onChange={handleChange} />
+      <InputWithLabel
+        id="search"
+        label="Search"
+        value={search}
+        isFocused
+        onInputChange={handleChange}
+      />
       <p>
-        Searching for <strong>{search}</strong>.
+        Searching for <strong>{search}</strong>...
       </p>
     </>
   );
 };
 
+const InputWithLabel = ({
+  id,
+  label,
+  value,
+  type = "text",
+  onInputChange,
+  isFocused,
+}) => (
+  <>
+    <label htmlFor={id}>{label}</label>
+    &nbsp;
+    <input
+      id={id}
+      type={type}
+      value={value}
+      autoFocus={isFocused}
+      onChange={onInputChange}
+    />
+  </>
+);
+
 Search.propTypes = {
   onSearch: PropTypes.func.isRequired,
   search: PropTypes.string.isRequired,
+};
+
+InputWithLabel.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  isFocused: PropTypes.bool,
+  onInputChange: PropTypes.func.isRequired,
 };
 
 export default Search;
