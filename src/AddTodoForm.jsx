@@ -25,26 +25,21 @@ const AddTodoForm = ({ onAddTodo }) => {
     <>
       <h3>Add Todo</h3>
       <form onSubmit={handleAddTodo}>
-        {/* <label htmlFor="todoTitle">Title</label>
-        <input
-          type="text"
-          id="todoTitle"
-          name="title"
-          value={todoTitle}
-          onChange={handleTitleChange}
-          placeholder="Add new item"
-        /> */}
-        <InputWithLabel
-          id="todoTitle"
-          name="title"
-          value={todoTitle}
-          onInputChange={handleTitleChange}
-          placeholder="Add new item"
-        >
-          Title:
-        </InputWithLabel>
-        <button type="submit">Add</button>
-        {/* <button type="submit">Delete</button> */}
+        <span className="TodoListItem">
+          <InputWithLabel
+            id="todoTitle"
+            name="title"
+            value={todoTitle}
+            onInputChange={handleTitleChange}
+            placeholder="Add new item"
+          >
+            Title:
+          </InputWithLabel>
+          &nbsp;
+          <button className="add" type="submit">
+            Add
+          </button>
+        </span>
         <p>
           Adding: <strong>{todoTitle}</strong>
         </p>

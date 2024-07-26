@@ -3,13 +3,11 @@ import PropTypes from "prop-types";
 
 const TodoListItem = ({ todo, onRemoveTodo }) => {
   return (
-    <div>
+    <div className="TodoListItem">
       <span>
         <a href={todo.url}>{todo.title}</a>
       </span>
-      <span>
-        <button onClick={() => onRemoveTodo(todo.id)}>Remove</button>
-      </span>
+      <button onClick={() => onRemoveTodo(todo.id)}>Remove</button>
     </div>
   );
 };
