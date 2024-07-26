@@ -52,6 +52,12 @@ const App = () => {
     console.log(event.target.value);
   };
 
+  // Function to remove todo
+  const removeTodo = (id) => {
+    const modifiedList = todoList.filter((todo) => todo.id !== id);
+    setTodoList(modifiedList);
+  };
+
   return (
     <>
       <Header />
@@ -61,7 +67,7 @@ const App = () => {
       <hr />
 
       <AddTodoForm onAddTodo={addTodo} />
-      <TodoList todoList={todoList} />
+      <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
 
       <Footer />
     </>

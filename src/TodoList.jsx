@@ -20,11 +20,11 @@ import TodoListItem from "./TodoListItem";
   },
 ]; */
 
-const TodoList = ({ todoList }) => (
+const TodoList = ({ todoList, onRemoveTodo }) => (
   <div>
     <ul>
       {todoList.map((todo) => (
-        <TodoListItem key={todo.id} todo={todo} />
+        <TodoListItem key={todo.id} todo={todo} onRemoveTodo={onRemoveTodo} />
       ))}
     </ul>
   </div>
@@ -38,6 +38,7 @@ TodoList.propTypes = {
       url: PropTypes.string,
     })
   ).isRequired,
+  onRemoveTodo: PropTypes.func.isRequired,
 };
 
 export default TodoList;

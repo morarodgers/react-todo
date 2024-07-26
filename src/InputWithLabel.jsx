@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 const InputWithLabel = ({
   id,
+  name,
   children,
   value,
   type = "text",
@@ -23,6 +24,7 @@ const InputWithLabel = ({
       <input
         ref={inputRef}
         id={id}
+        name={name}
         type={type}
         value={value}
         autoFocus={isFocused}
@@ -34,6 +36,7 @@ const InputWithLabel = ({
 
 InputWithLabel.propTypes = {
   id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   type: PropTypes.string,

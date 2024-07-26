@@ -10,7 +10,6 @@ const Search = ({ search, onSearch }) => {
     <>
       <InputWithLabel
         id="search"
-        /* label="Search" */
         value={search}
         isFocused
         onInputChange={handleChange}
