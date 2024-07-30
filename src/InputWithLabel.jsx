@@ -8,15 +8,16 @@ const InputWithLabel = ({
   value,
   type = "text",
   onInputChange,
-  isFocused,
+  //isFocused,
 }) => {
   const inputRef = useRef();
 
-  useEffect(() => {
-    if (isFocused && inputRef.current) {
+  useEffect(
+    () => {
+      /*  if (inputRef.current) { */
       inputRef.current.focus();
-    }
-  }, [isFocused]);
+    } /* , [isFocused] */
+  );
   return (
     <>
       <label htmlFor={id}>{children}</label>
@@ -27,7 +28,7 @@ const InputWithLabel = ({
         name={name}
         type={type}
         value={value}
-        autoFocus={isFocused}
+        /* autoFocus={isFocused} */
         onChange={onInputChange}
       />
     </>

@@ -5,43 +5,31 @@ import Search from "./Search";
 import Header from "./Header";
 import Footer from "./Footer";
 
-// Custom hook
-/*const useSemiPersistentState = () => {
-  const [todoList, setTodoList] = useState(
-    JSON.parse(localStorage.getItem("savedTodoList")) || []
-  );
-
-  useEffect(() => {
-    localStorage.setItem("savedTodoList", JSON.stringify(todoList));
-  }, [todoList]);
-
-  return [todoList, setTodoList];
-};*/
-
-// Reusable custom hook
-const useSemiPersistentState = (key, initialState) => {
-  const [value, setValue] = useState(() => {
-    const savedValue = localStorage.getItem(key);
-    try {
-      return savedValue ? JSON.parse(savedValue) : initialState;
-    } catch (e) {
-      console.warn(`Error parsing localStorage key "${key}":`, e);
-      return initialState;
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
-
-  return [value, setValue];
-};
-
 const App = () => {
-  // Custom hook used
-  //const [todoList, setTodoList] = useSemiPersistentState();
-  const [todoList, setTodoList] = useSemiPersistentState("todoList", []);
-  const [search, setSearch] = useSemiPersistentState("search", "React");
+  const [search, setSearch] = useState("search", "React");
+  const [todoList, setTodoList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    new Promise((resolve /* reject */) => {
+      setTimeout(() => {
+        resolve({
+          data: {
+            todoList: JSON.parse(localStorage.getItem("savedTodoList")) || [],
+          },
+        });
+      }, 2000);
+    }).then((result) => {
+      setTodoList(result.data.todoList);
+      setIsLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      localStorage.setItem("savedTodoList", JSON.stringify(todoList));
+    }
+  }, [todoList, isLoading]);
 
   const addTodo = (newTodo) => {
     setTodoList([...todoList, newTodo]);
