@@ -1,5 +1,5 @@
-//import { useState } from "react";
 import PropTypes from "prop-types";
+import InputWithLabel from "./InputWithLabel";
 const Search = ({ search, onSearch }) => {
   const handleChange = (event) => {
     console.log(event.target.value);
@@ -8,10 +8,16 @@ const Search = ({ search, onSearch }) => {
 
   return (
     <>
-      <label htmlFor="search">Search: </label>
-      <input id="search" type="text" value={search} onChange={handleChange} />
+      <InputWithLabel
+        id="search"
+        value={search}
+        isFocused
+        onInputChange={handleChange}
+      >
+        Search:
+      </InputWithLabel>
       <p>
-        Searching for <strong>{search}</strong>.
+        Searching for <strong>{search}</strong>...
       </p>
     </>
   );

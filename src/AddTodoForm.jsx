@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import InputWithLabel from "./InputWithLabel";
 
 const AddTodoForm = ({ onAddTodo }) => {
   const [todoTitle, setTodoTitle] = useState("");
@@ -21,24 +22,29 @@ const AddTodoForm = ({ onAddTodo }) => {
   };
 
   return (
-    <div>
+    <>
       <h3>Add Todo</h3>
       <form onSubmit={handleAddTodo}>
-        <label htmlFor="todoTitle">Title</label>
-        <input
-          type="text"
-          id="todoTitle"
-          name="title"
-          value={todoTitle}
-          onChange={handleTitleChange}
-          placeholder="Add new item"
-        />
-        <button type="submit">Add</button>
+        <span className="TodoListItem">
+          <InputWithLabel
+            id="todoTitle"
+            name="title"
+            value={todoTitle}
+            onInputChange={handleTitleChange}
+            placeholder="Add new item"
+          >
+            Title:
+          </InputWithLabel>
+          &nbsp;
+          <button className="add" type="submit">
+            Add
+          </button>
+        </span>
         <p>
           Adding: <strong>{todoTitle}</strong>
         </p>
       </form>
-    </div>
+    </>
   );
 };
 
