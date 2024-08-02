@@ -3,21 +3,22 @@ import PropTypes from "prop-types";
 
 const InputWithLabel = ({
   id,
-  /* name, */
   children,
   value,
   type = "text",
   onInputChange,
-  //isFocused,
+  isFocused,
+  onFocus,
+  onBlur,
 }) => {
   const inputRef = useRef();
 
-  useEffect(
-    () => {
-      /*  if (inputRef.current) { */
+  useEffect(() => {
+    if (isFocused && inputRef.current) {
       inputRef.current.focus();
-    } /* , [isFocused] */
-  );
+    }
+  }, [isFocused]);
+
   return (
     <>
       <label htmlFor={id}>{children}</label>
@@ -25,11 +26,11 @@ const InputWithLabel = ({
       <input
         ref={inputRef}
         id={id}
-        /* name={name} */
         type={type}
         value={value}
-        /* autoFocus={isFocused} */
         onChange={onInputChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
       />
     </>
   );
@@ -43,6 +44,8 @@ InputWithLabel.propTypes = {
   isFocused: PropTypes.bool,
   children: PropTypes.node.isRequired,
   onInputChange: PropTypes.func.isRequired,
+  onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
 };
 
 export default InputWithLabel;

@@ -16,7 +16,7 @@ const useStorageState = (key, initialState) => {
 };
 
 const App = () => {
-  const [search, setSearch] = useStorageState("search", "React");
+  const [search, setSearch] = useStorageState("search", "");
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -48,12 +48,6 @@ const App = () => {
     setTodoList([...todoList, newTodo]);
   };
 
-  const searchList = (title) => {
-    const searchedList = todoList.filter((todo) =>
-      todo.title.toLowerCase().includes(title.toLowerCase())
-    );
-    setTodoList(searchedList);
-  };
   // Function to remove todo
   const removeTodo = (id) => {
     const modifiedList = todoList.filter((todo) => todo.id !== id);
@@ -62,8 +56,12 @@ const App = () => {
 
   const handleSearch = (event) => {
     setSearch(event.target.value);
-    searchList(event.target.value);
   };
+
+  // Function to search todo list
+  const filteredList = todoList.filter((todo) =>
+    todo.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <>
@@ -82,7 +80,7 @@ const App = () => {
           </p>
         </div>
       ) : (
-        <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
+        <TodoList todoList={filteredList} onRemoveTodo={removeTodo} />
       )}
       <Footer />
     </>
