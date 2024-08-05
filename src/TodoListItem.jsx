@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-//import TodoList from "./TodoList";
+import Button from "./Button";
 
 const TodoListItem = ({ todo, onRemoveTodo }) => {
   return (
@@ -7,7 +7,9 @@ const TodoListItem = ({ todo, onRemoveTodo }) => {
       <span>
         <a href={todo.url}>{todo.title}</a>
       </span>
-      <button onClick={() => onRemoveTodo(todo.id)}>Remove</button>
+      <Button handleClick={() => onRemoveTodo(todo.id)} className="remove">
+        Remove
+      </Button>
     </div>
   );
 };

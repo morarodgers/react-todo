@@ -1,9 +1,20 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import InputWithLabel from "./InputWithLabel";
+import Button from "./Button";
 
 const AddTodoForm = ({ onAddTodo }) => {
   const [todoTitle, setTodoTitle] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+
+  // Functions to handle focus and blur events
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
 
   const handleTitleChange = (event) => {
     const newTodoTitle = event.target.value;
@@ -19,6 +30,7 @@ const AddTodoForm = ({ onAddTodo }) => {
       onAddTodo(newTodo);
       setTodoTitle("");
     }
+    setIsFocused(true);
   };
 
   return (
@@ -32,17 +44,23 @@ const AddTodoForm = ({ onAddTodo }) => {
             value={todoTitle}
             onInputChange={handleTitleChange}
             placeholder="Add new item"
+            isFocused={isFocused}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           >
             Title:
           </InputWithLabel>
           &nbsp;
-          <button className="add" type="submit">
+          <Button handleClick={handleAddTodo} className="add" type="submit">
             Add
-          </button>
+          </Button>
         </span>
-        <p>
-          Adding: <strong>{todoTitle}</strong>
-        </p>
+        {/* Display a message when user types in search input*/}
+        {isFocused && todoTitle && (
+          <p>
+            Adding: <strong>{todoTitle}...</strong>
+          </p>
+        )}
       </form>
     </>
   );

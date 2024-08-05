@@ -5,51 +5,47 @@ import Search from "./Search";
 import Header from "./Header";
 import Footer from "./Footer";
 
-// Custom hook
-/*const useSemiPersistentState = () => {
-  const [todoList, setTodoList] = useState(
-    JSON.parse(localStorage.getItem("savedTodoList")) || []
-  );
+const useStorageState = (key, initialState) => {
+  const [value, setValue] = useState(localStorage.getItem(key) || initialState);
 
   useEffect(() => {
-    localStorage.setItem("savedTodoList", JSON.stringify(todoList));
-  }, [todoList]);
-
-  return [todoList, setTodoList];
-};*/
-
-// Reusable custom hook
-const useSemiPersistentState = (key, initialState) => {
-  const [value, setValue] = useState(() => {
-    const savedValue = localStorage.getItem(key);
-    try {
-      return savedValue ? JSON.parse(savedValue) : initialState;
-    } catch (e) {
-      console.warn(`Error parsing localStorage key "${key}":`, e);
-      return initialState;
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
+    localStorage.setItem(key, value);
+  }, [value, key]);
 
   return [value, setValue];
 };
 
 const App = () => {
-  // Custom hook used
-  //const [todoList, setTodoList] = useSemiPersistentState();
-  const [todoList, setTodoList] = useSemiPersistentState("todoList", []);
-  const [search, setSearch] = useSemiPersistentState("search", "React");
+  const [search, setSearch] = useStorageState("search", "");
+  const [todoList, setTodoList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  //const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    new Promise((resolve /* reject */) => {
+      setTimeout(() => {
+        resolve({
+          data: {
+            todoList: JSON.parse(localStorage.getItem("savedTodoList")) || [],
+          },
+        });
+      }, 2000);
+    }).then((result) => {
+      setTodoList(result.data.todoList);
+      setIsLoading(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!isLoading) {
+      localStorage.setItem("savedTodoList", JSON.stringify(todoList));
+    }
+  }, [todoList, isLoading]);
 
   const addTodo = (newTodo) => {
     setTodoList([...todoList, newTodo]);
-  };
-
-  const handleSearch = (event) => {
-    setSearch(event.target.value);
-    console.log(event.target.value);
   };
 
   // Function to remove todo
@@ -57,6 +53,15 @@ const App = () => {
     const modifiedList = todoList.filter((todo) => todo.id !== id);
     setTodoList(modifiedList);
   };
+
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  };
+
+  // Function to search todo list
+  const filteredList = todoList.filter((todo) =>
+    todo.title.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <>
@@ -67,8 +72,16 @@ const App = () => {
       <hr />
 
       <AddTodoForm onAddTodo={addTodo} />
-      <TodoList todoList={todoList} onRemoveTodo={removeTodo} />
-
+      {isLoading ? (
+        <div className="load-container">
+          <div className="spinner"></div>
+          <p className="loading-text">
+            <strong>Loading...</strong>
+          </p>
+        </div>
+      ) : (
+        <TodoList todoList={filteredList} onRemoveTodo={removeTodo} />
+      )}
       <Footer />
     </>
   );
