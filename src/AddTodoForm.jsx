@@ -20,14 +20,15 @@ const AddTodoForm = ({ onAddTodo }) => {
     const newTodoTitle = event.target.value;
     setTodoTitle(newTodoTitle);
   };
-  const handleAddTodo = (event) => {
+  const handleAddTodo = async (event) => {
     event.preventDefault();
     if (todoTitle.trim()) {
-      const newTodo = {
+      await onAddTodo(todoTitle);
+      /* const newTodo = {
         id: Date.now(),
         title: todoTitle,
-      };
-      onAddTodo(newTodo);
+      }; */
+      /* onAddTodo(newTodo); */
       setTodoTitle("");
     }
     setIsFocused(true);

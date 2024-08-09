@@ -43,7 +43,6 @@ const App = () => {
 
       // Parse the response as JSON
       const data = await response.json();
-      console.log(data);
 
       // Map records into an array of todo items
       const todos = data.records.map((todo) => {
@@ -51,10 +50,8 @@ const App = () => {
           title: todo.fields.Title,
           id: todo.id,
         };
-        console.log(newTodo);
         return newTodo;
       });
-      console.log(todos);
 
       // Set todo list
       setTodoList(todos);
@@ -64,20 +61,48 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    /* setIsLoading(true);
-    new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({
-          data: {
-            todoList: JSON.parse(localStorage.getItem("savedTodoList")) || [],
+  // Async function to post data
+  const postTodo = async (todo) => {
+    try {
+      const newItem = {
+        fields: {
+          Title: todo,
+        },
+      };
+
+      console.log(JSON.stringify(newItem));
+      const response = await fetch(
+        `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${
+          import.meta.env.VITE_TABLE_NAME
+        }`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
           },
-        });
-      }, 2000);
-    }).then((result) => {
-      setTodoList(result.data.todoList);
-      setIsLoading(false);
-    }); */
+          body: JSON.stringify(newItem),
+        }
+      );
+
+      if (!response.ok) {
+        const message = `An error ocurred: ${response.status}`;
+        throw new Error(message);
+      }
+      const data = await response.json();
+      const addedTodo = {
+        title: data.fields.Title,
+        id: data.id,
+      };
+      return addedTodo;
+    } catch (error) {
+      console.log(error.message);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    // Call the fetchData function
     fetchData();
   }, []);
 
@@ -87,8 +112,11 @@ const App = () => {
     }
   }, [todoList, isLoading]);
 
-  const addTodo = (newTodo) => {
-    setTodoList([...todoList, newTodo]);
+  const addTodo = async (todoTitle) => {
+    const addedTodo = await postTodo(todoTitle);
+    if (addedTodo) {
+      setTodoList([...todoList, addedTodo]);
+    }
   };
 
   // Function to remove todo
