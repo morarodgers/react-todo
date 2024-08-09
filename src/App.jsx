@@ -20,11 +20,53 @@ const App = () => {
   const [todoList, setTodoList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  //const [isError, setIsError] = useState(false);
+  // Create a new async function fetchData
+  const fetchData = async () => {
+    const options = {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
+      },
+    };
+    // URL for the Airtable API
+    const url = `https://api.airtable.com/v0/${
+      import.meta.env.VITE_AIRTABLE_BASE_ID
+    }/${import.meta.env.VITE_TABLE_NAME}`;
+
+    try {
+      const response = await fetch(url, options);
+
+      // if the response is not okay, throw an error
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      // Parse the response as JSON
+      const data = await response.json();
+      console.log(data);
+
+      // Map records into an array of todo items
+      const todos = data.records.map((todo) => {
+        const newTodo = {
+          title: todo.fields.Title,
+          id: todo.id,
+        };
+        console.log(newTodo);
+        return newTodo;
+      });
+      console.log(todos);
+
+      // Set todo list
+      setTodoList(todos);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
-    setIsLoading(true);
-    new Promise((resolve /* reject */) => {
+    /* setIsLoading(true);
+    new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve({
           data: {
@@ -35,7 +77,8 @@ const App = () => {
     }).then((result) => {
       setTodoList(result.data.todoList);
       setIsLoading(false);
-    });
+    }); */
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -54,13 +97,14 @@ const App = () => {
     setTodoList(modifiedList);
   };
 
+  // Function to search todo list
   const handleSearch = (event) => {
     setSearch(event.target.value);
   };
 
-  // Function to search todo list
-  const filteredList = todoList.filter((todo) =>
-    todo.title.toLowerCase().includes(search.toLowerCase())
+  const filteredList = todoList.filter(
+    (todo) =>
+      todo.title && todo.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
