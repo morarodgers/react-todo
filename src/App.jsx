@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import TodoList from "./TodoList";
 import AddTodoForm from "./AddTodoForm";
 import Search from "./Search";
@@ -23,7 +25,7 @@ const App = () => {
   // Create a new async function fetchData
   const fetchData = async () => {
     const options = {
-      method: "GET",
+      //method: "GET",
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
       },
@@ -34,24 +36,28 @@ const App = () => {
     }/${import.meta.env.VITE_TABLE_NAME}`;
 
     try {
-      const response = await fetch(url, options);
+      //const response = await fetch(url, options);
+      const response = await axios.get(url, options);
 
       // if the response is not okay, throw an error
-      if (!response.ok) {
+      /* if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
-      }
+      } */
 
       // Parse the response as JSON
-      const data = await response.json();
+      //const data = await response.json();
+      const data = response.data;
 
       // Map records into an array of todo items
-      const todos = data.records.map((todo) => {
-        const newTodo = {
+      const todos = data.records.map((todo) => ({
+        title: todo.fields.Title,
+        id: todo.id,
+        /* const newTodo = {
           title: todo.fields.Title,
           id: todo.id,
         };
-        return newTodo;
-      });
+        return newTodo; */
+      }));
 
       // Set todo list
       setTodoList(todos);
@@ -70,30 +76,35 @@ const App = () => {
         },
       };
 
-      console.log(JSON.stringify(newItem));
-      const response = await fetch(
+      //console.log(JSON.stringify(newItem));
+      /* const response = await fetch(
         `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${
           import.meta.env.VITE_TABLE_NAME
-        }`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
-          },
-          body: JSON.stringify(newItem),
-        }
-      );
+        }`, */
+      const url = `https://api.airtable.com/v0/${
+        import.meta.env.VITE_AIRTABLE_BASE_ID
+      }/${import.meta.env.VITE_TABLE_NAME}`;
 
-      if (!response.ok) {
+      const response = await axios.post(url, newItem, {
+        /* method: "POST", */
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
+        },
+        /* body: JSON.stringify(newItem), */
+      });
+
+      /* if (!response.ok) {
         const message = `An error ocurred: ${response.status}`;
         throw new Error(message);
-      }
-      const data = await response.json();
+      } 
+      const data = await response.json();*/
+      const data = response.data;
       const addedTodo = {
         title: data.fields.Title,
         id: data.id,
       };
+
       return addedTodo;
     } catch (error) {
       console.log(error.message);
@@ -136,26 +147,45 @@ const App = () => {
   );
 
   return (
-    <>
-      <Header />
-      <h1>Todo List</h1>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Header />
+              <h1>Todo List</h1>
 
-      <Search onSearch={handleSearch} search={search} />
-      <hr />
+              <Search onSearch={handleSearch} search={search} />
+              <hr />
 
-      <AddTodoForm onAddTodo={addTodo} />
-      {isLoading ? (
-        <div className="load-container">
-          <div className="spinner"></div>
-          <p className="loading-text">
-            <strong>Loading...</strong>
-          </p>
-        </div>
-      ) : (
-        <TodoList todoList={filteredList} onRemoveTodo={removeTodo} />
-      )}
-      <Footer />
-    </>
+              <AddTodoForm onAddTodo={addTodo} />
+              {isLoading ? (
+                <div className="load-container">
+                  <div className="spinner"></div>
+                  <p className="loading-text">
+                    <strong>Loading...</strong>
+                  </p>
+                </div>
+              ) : (
+                <TodoList todoList={filteredList} onRemoveTodo={removeTodo} />
+              )}
+              <Footer />
+            </>
+          }
+        />
+        {/* Added routes */}
+        <Route path="/new" element={<h1>New Todo List</h1>} />
+        <Route
+          path="/more"
+          element={
+            <a href="https://www.linkedin.com/in/morarodgers/" target="_blank">
+              <h4>Let us connect</h4>
+            </a>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
