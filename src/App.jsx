@@ -25,7 +25,6 @@ const App = () => {
   // Create a new async function fetchData
   const fetchData = async () => {
     const options = {
-      //method: "GET",
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
       },
@@ -36,30 +35,17 @@ const App = () => {
     }/${import.meta.env.VITE_TABLE_NAME}`;
 
     try {
-      //const response = await fetch(url, options);
       const response = await axios.get(url, options);
 
-      // if the response is not okay, throw an error
-      /* if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      } */
-
       // Parse the response as JSON
-      //const data = await response.json();
       const data = response.data;
 
       // Map records into an array of todo items
       const todos = data.records.map((todo) => ({
         title: todo.fields.Title,
         id: todo.id,
-        /* const newTodo = {
-          title: todo.fields.Title,
-          id: todo.id,
-        };
-        return newTodo; */
       }));
 
-      // Set todo list
       setTodoList(todos);
       setIsLoading(false);
     } catch (error) {
@@ -76,29 +62,17 @@ const App = () => {
         },
       };
 
-      //console.log(JSON.stringify(newItem));
-      /* const response = await fetch(
-        `https://api.airtable.com/v0/${import.meta.env.VITE_AIRTABLE_BASE_ID}/${
-          import.meta.env.VITE_TABLE_NAME
-        }`, */
       const url = `https://api.airtable.com/v0/${
         import.meta.env.VITE_AIRTABLE_BASE_ID
       }/${import.meta.env.VITE_TABLE_NAME}`;
 
       const response = await axios.post(url, newItem, {
-        /* method: "POST", */
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${import.meta.env.VITE_AIRTABLE_API_TOKEN}`,
         },
-        /* body: JSON.stringify(newItem), */
       });
 
-      /* if (!response.ok) {
-        const message = `An error ocurred: ${response.status}`;
-        throw new Error(message);
-      } 
-      const data = await response.json();*/
       const data = response.data;
       const addedTodo = {
         title: data.fields.Title,

@@ -37,9 +37,6 @@ const Search = ({ search, onSearch }) => {
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     onSearch({ target: { value: localSearch } });
-
-    // Clear the search input
-    //setLocalSearch("");
   };
 
   return (
