@@ -1,0 +1,35 @@
+:root {
+  --nav-text-color: #333;
+  --nav-bg-hover: #e0e0e0;
+  --nav-active-color: #007bff;
+}
+
+.NavItem {
+  color: var(--nav-text-color);
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+
+.NavItem:hover {
+  background-color: var(--nav-bg-hover);
+}
+
+.ActiveNavItem {
+  color: var(--nav-active-color);
+  font-weight: bold;
+}
+
+.NavItem {
+  padding: 10px;
+  display: inline-block;
+  text-decoration: none;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .NavItem {
+    display: block;
+    padding: 15px;
+    text-align: center;
+  }
+}

@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 import Button from "./Button";
+import style from "./TodoListItem.module.css";
 
 const TodoListItem = ({ todo, onRemoveTodo }) => {
   return (
     <div className="TodoListItem">
-      <span>
+      <span className={style.ListItem}>
         <a href={todo.url}>{todo.title}</a>
       </span>
       <Button handleClick={() => onRemoveTodo(todo.id)} className="remove">

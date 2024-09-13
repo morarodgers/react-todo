@@ -6,6 +6,7 @@ import AddTodoForm from "./AddTodoForm";
 import Search from "./Search";
 import Header from "./Header";
 import Footer from "./Footer";
+//import Navigation from "./Navigation";
 
 const useStorageState = (key, initialState) => {
   const [value, setValue] = useState(localStorage.getItem(key) || initialState);
@@ -127,6 +128,7 @@ const App = () => {
           path="/"
           element={
             <>
+              {/* <Navigation /> */}
               <Header />
               <h1>Todo List</h1>
 
